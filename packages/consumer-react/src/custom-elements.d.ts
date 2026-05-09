@@ -10,6 +10,7 @@ declare module 'react' {
           loading?: boolean | ''
           disabled?: boolean | ''
           'full-width'?: boolean | ''
+          type?: 'button' | 'submit' | 'reset'
         },
         HTMLElement
       >
@@ -24,6 +25,8 @@ declare module 'react' {
           'first-day-of-week'?: number | ''
           placeholder?: string
           name?: string
+          label?: string
+          error?: string
         },
         HTMLElement
       >

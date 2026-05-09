@@ -15,6 +15,8 @@ export class UiDatepicker extends LitElement {
     firstDayOfWeek: { type: Number, attribute: 'first-day-of-week', reflect: true },
     placeholder: { type: String, reflect: true },
     name: { type: String, reflect: true },
+    label: { type: String, reflect: true },
+    error: { type: String, reflect: true },
     _open: { type: Boolean, state: true },
     _viewMonth: { type: Number, state: true },
     _viewYear: { type: Number, state: true },
@@ -28,6 +30,8 @@ export class UiDatepicker extends LitElement {
   declare firstDayOfWeek: number
   declare placeholder: string
   declare name: string
+  declare label: string
+  declare error: string
   declare _open: boolean
   declare _viewMonth: number
   declare _viewYear: number
@@ -42,6 +46,7 @@ export class UiDatepicker extends LitElement {
     this.firstDayOfWeek = 0
     this.placeholder = ''
     this.name = ''
+    this.label = ''
     this._open = false
     const now = new Date()
     this._viewMonth = now.getMonth()
@@ -266,6 +271,30 @@ export class UiDatepicker extends LitElement {
       font-size: 1rem;
     }
 
+    .datepicker-field {
+      display: flex;
+      flex-direction: column;
+      gap: 0.25em;
+    }
+
+    .label {
+      font-size: 0.875rem;
+      font-weight: 600;
+      color: var(--ui-input-label-fg, #374151);
+      line-height: 1;
+    }
+
+    .helper-text {
+      font-size: 0.75rem;
+      line-height: 1.25;
+      color: var(--ui-input-helper-fg, #6b7280);
+      min-height: 1em;
+    }
+
+    :host([error]:not([error=""])) .helper-text {
+      color: var(--ui-input-error-fg, #ef4444);
+    }
+
     .datepicker-wrapper {
       position: relative;
     }
@@ -281,6 +310,15 @@ export class UiDatepicker extends LitElement {
 
     .input-container:focus-within {
       border-color: var(--ui-focus-ring, #3b82f6);
+    }
+
+    :host([error]:not([error=""])) .input-container {
+      border-color: var(--ui-input-error-border, #ef4444);
+    }
+
+    :host([error]:not([error=""])) .input-container:focus-within {
+      border-color: var(--ui-input-error-border, #ef4444);
+      box-shadow: 0 0 0 1px var(--ui-input-error-border, #ef4444);
     }
 
     .input-container input {
@@ -472,77 +510,85 @@ export class UiDatepicker extends LitElement {
     const days = this._getCalendarDays()
 
     return html`
-      <div class="datepicker-wrapper">
-        <div class="input-container">
-          <input
-            .value=${live(this._displayValue)}
-            @focus=${this._openCalendar}
-            @change=${this._onInputChange}
-            placeholder=${ifDefined(this.placeholder || undefined)}
-            name=${ifDefined(this.name || undefined)}
-            ?disabled=${this.disabled}
-            autocomplete="off"
-            aria-label="Date input"
-          >
-          <button
-            class="icon-btn"
-            @click=${this._toggleOpen}
-            ?disabled=${this.disabled}
-            type="button"
-            aria-label="Toggle calendar"
-            tabindex="-1"
-          >
-            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-              <rect x="1.5" y="3.5" width="13" height="11" rx="1.5"/>
-              <path d="M1.5 6.5h13"/>
-              <path d="M5 1.5v3M11 1.5v3"/>
-            </svg>
-          </button>
-        </div>
-        ${this._open ? html`
-          <div class="calendar-popup" role="dialog" aria-label="Date picker">
-            <div class="calendar-header">
-              <button
-                class="nav-btn"
-                @click=${this._prevMonth}
-                type="button"
-                aria-label="Previous month"
-              >‹</button>
-              <span class="month-label">${this._getMonthLabel()}</span>
-              <button
-                class="nav-btn"
-                @click=${this._nextMonth}
-                type="button"
-                aria-label="Next month"
-              >›</button>
-            </div>
-            <div class="day-names" role="row" aria-hidden="true">
-              ${dayNames.map(name => html`
-                <span class="day-name">${name}</span>
-              `)}
-            </div>
-            <div class="days-grid" role="grid" aria-label="Calendar days">
-              ${days.map(d => html`
-                <button
-                  class=${classMap({
-                    day: true,
-                    'day--current-month': d.isCurrentMonth,
-                    'day--other-month': !d.isCurrentMonth,
-                    'day--selected': d.isSelected,
-                    'day--today': d.isToday,
-                    'day--disabled': d.disabled,
-                  })}
-                  @click=${() => this._selectDate(d.date)}
-                  ?disabled=${d.disabled}
-                  type="button"
-                  role="gridcell"
-                  aria-selected=${d.isSelected ? 'true' : 'false'}
-                  aria-label=${d.date.toLocaleDateString(this.locale, { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}
-                  tabindex=${d.isSelected ? '0' : '-1'}
-                >${d.day}</button>
-              `)}
-            </div>
+      <div class="datepicker-field">
+        ${this.label ? html`
+          <label class="label">${this.label}</label>
+        ` : ''}
+        <div class="datepicker-wrapper">
+          <div class="input-container">
+            <input
+              .value=${live(this._displayValue)}
+              @focus=${this._openCalendar}
+              @change=${this._onInputChange}
+              placeholder=${ifDefined(this.placeholder || undefined)}
+              name=${ifDefined(this.name || undefined)}
+              ?disabled=${this.disabled}
+              autocomplete="off"
+              aria-label=${ifDefined(this.label || undefined)}
+            >
+            <button
+              class="icon-btn"
+              @click=${this._toggleOpen}
+              ?disabled=${this.disabled}
+              type="button"
+              aria-label="Toggle calendar"
+              tabindex="-1"
+            >
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="1.5" y="3.5" width="13" height="11" rx="1.5"/>
+                <path d="M1.5 6.5h13"/>
+                <path d="M5 1.5v3M11 1.5v3"/>
+              </svg>
+            </button>
           </div>
+          ${this._open ? html`
+            <div class="calendar-popup" role="dialog" aria-label="Date picker">
+              <div class="calendar-header">
+                <button
+                  class="nav-btn"
+                  @click=${this._prevMonth}
+                  type="button"
+                  aria-label="Previous month"
+                >‹</button>
+                <span class="month-label">${this._getMonthLabel()}</span>
+                <button
+                  class="nav-btn"
+                  @click=${this._nextMonth}
+                  type="button"
+                  aria-label="Next month"
+                >›</button>
+              </div>
+              <div class="day-names" role="row" aria-hidden="true">
+                ${dayNames.map(name => html`
+                  <span class="day-name">${name}</span>
+                `)}
+              </div>
+              <div class="days-grid" role="grid" aria-label="Calendar days">
+                ${days.map(d => html`
+                  <button
+                    class=${classMap({
+                      day: true,
+                      'day--current-month': d.isCurrentMonth,
+                      'day--other-month': !d.isCurrentMonth,
+                      'day--selected': d.isSelected,
+                      'day--today': d.isToday,
+                      'day--disabled': d.disabled,
+                    })}
+                    @click=${() => this._selectDate(d.date)}
+                    ?disabled=${d.disabled}
+                    type="button"
+                    role="gridcell"
+                    aria-selected=${d.isSelected ? 'true' : 'false'}
+                    aria-label=${d.date.toLocaleDateString(this.locale, { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}
+                    tabindex=${d.isSelected ? '0' : '-1'}
+                  >${d.day}</button>
+                `)}
+              </div>
+            </div>
+          ` : ''}
+        </div>
+        ${this.error ? html`
+          <span class="helper-text">${this.error}</span>
         ` : ''}
       </div>
     `

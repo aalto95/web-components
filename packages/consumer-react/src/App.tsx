@@ -1,71 +1,147 @@
-import { useState } from 'react'
+import { useState, useRef, useEffect, type FormEvent } from 'react'
 import './App.css'
 
+interface FormData {
+  name: string
+  email: string
+  dob: string
+  password: string
+}
+
+interface FormErrors {
+  name?: string
+  email?: string
+  dob?: string
+  password?: string
+}
+
+const initialForm: FormData = { name: '', email: '', dob: '', password: '' }
+
+function useInputEvent(
+  ref: React.RefObject<HTMLElement | null>,
+  event: string,
+  handler: (value: string) => void,
+) {
+  const handlerRef = useRef(handler)
+  handlerRef.current = handler
+
+  useEffect(() => {
+    const el = ref.current
+    if (!el) return
+    const listener = (e: Event) => {
+      handlerRef.current((e as CustomEvent).detail.value ?? '')
+    }
+    el.addEventListener(event, listener)
+    return () => el.removeEventListener(event, listener)
+  }, [ref, event])
+}
+
 function App() {
-  const [loading, setLoading] = useState(false)
-  const [disabled, setDisabled] = useState(false)
+  const [form, setForm] = useState<FormData>(initialForm)
+  const [errors, setErrors] = useState<FormErrors>({})
+  const [submitted, setSubmitted] = useState<FormData | null>(null)
+
+  const nameRef = useRef<HTMLElement>(null)
+  const emailRef = useRef<HTMLElement>(null)
+  const dobRef = useRef<HTMLElement>(null)
+  const passwordRef = useRef<HTMLElement>(null)
+
+  const updateField = (field: keyof FormData) => (value: string) => {
+    setForm(prev => ({ ...prev, [field]: value }))
+    if (errors[field]) setErrors(prev => ({ ...prev, [field]: undefined }))
+  }
+
+  useInputEvent(nameRef, 'input', updateField('name'))
+  useInputEvent(emailRef, 'input', updateField('email'))
+  useInputEvent(dobRef, 'change', updateField('dob'))
+  useInputEvent(passwordRef, 'input', updateField('password'))
+
+  const validate = (): FormErrors => {
+    const e: FormErrors = {}
+    if (!form.name.trim()) e.name = 'Name is required'
+    if (!form.email.trim()) {
+      e.email = 'Email is required'
+    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email)) {
+      e.email = 'Invalid email address'
+    }
+    if (!form.dob) e.dob = 'Date of birth is required'
+    if (!form.password) {
+      e.password = 'Password is required'
+    } else if (form.password.length < 6) {
+      e.password = 'At least 6 characters'
+    }
+    return e
+  }
+
+  const handleSubmit = (e: FormEvent) => {
+    e.preventDefault()
+    const newErrors = validate()
+    setErrors(newErrors)
+    if (Object.keys(newErrors).length === 0) {
+      setSubmitted(form)
+    }
+  }
+
+  const handleReset = () => {
+    setForm(initialForm)
+    setErrors({})
+    setSubmitted(null)
+    if (nameRef.current) (nameRef.current as any).value = ''
+    if (emailRef.current) (emailRef.current as any).value = ''
+    if (dobRef.current) (dobRef.current as any).value = ''
+    if (passwordRef.current) (passwordRef.current as any).value = ''
+  }
 
   return (
     <div className="app">
-      <h1>React + <code>&lt;ui-button&gt;</code></h1>
+      <h1>Registration Form</h1>
 
-      <section>
-        <h2>Variants</h2>
-        <div className="row">
-          <ui-button variant="primary">Primary</ui-button>
-          <ui-button variant="secondary">Secondary</ui-button>
-          <ui-button variant="outline">Outline</ui-button>
-          <ui-button variant="ghost">Ghost</ui-button>
+      <form className="form" onSubmit={handleSubmit}>
+        <ui-input
+          ref={nameRef}
+          label="Full Name"
+          placeholder="John Doe"
+          required
+          error={errors.name || undefined}
+        />
+
+        <ui-input
+          ref={emailRef}
+          label="Email"
+          type="email"
+          placeholder="john@example.com"
+          required
+          error={errors.email || undefined}
+        />
+
+        <ui-datepicker
+          ref={dobRef}
+          label="Date of Birth"
+          placeholder="Select your birth date"
+          error={errors.dob || undefined}
+        />
+
+        <ui-input
+          ref={passwordRef}
+          label="Password"
+          type="password"
+          placeholder="At least 6 characters"
+          required
+          error={errors.password || undefined}
+        />
+
+        <div className="form-actions">
+          <ui-button type="submit" variant="primary">Register</ui-button>
+          <ui-button type="button" variant="ghost" onClick={handleReset}>Reset</ui-button>
         </div>
-      </section>
+      </form>
 
-      <section>
-        <h2>Sizes</h2>
-        <div className="row">
-          <ui-button size="small">Small</ui-button>
-          <ui-button size="medium">Medium</ui-button>
-          <ui-button size="large">Large</ui-button>
+      {submitted && (
+        <div className="success">
+          <h2>Submission Received</h2>
+          <pre>{JSON.stringify(submitted, null, 2)}</pre>
         </div>
-      </section>
-
-      <section>
-        <h2>With React state</h2>
-        <div className="row">
-          <ui-button
-            variant="primary"
-            loading={loading ? true : undefined}
-            disabled={disabled ? true : undefined}
-            onClick={() => alert('Clicked!')}
-          >
-            {loading ? 'Loading...' : 'Click me'}
-          </ui-button>
-          <ui-button variant="outline" onClick={() => setLoading(l => !l)}>
-            Toggle Loading
-          </ui-button>
-          <ui-button variant="ghost" onClick={() => setDisabled(d => !d)}>
-            Toggle Disabled
-          </ui-button>
-        </div>
-      </section>
-
-      <section>
-        <h2>Full width</h2>
-        <ui-button full-width variant="secondary">Full Width Button</ui-button>
-      </section>
-
-      <section>
-        <h2>With icons</h2>
-        <div className="row">
-          <ui-button>
-            <span slot="icon-leading">→</span>
-            Leading Icon
-          </ui-button>
-          <ui-button>
-            Trailing Icon
-            <span slot="icon-trailing">→</span>
-          </ui-button>
-        </div>
-      </section>
+      )}
     </div>
   )
 }
