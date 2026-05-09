@@ -13,6 +13,20 @@ declare module 'react' {
         },
         HTMLElement
       >
+
+      'ui-datepicker': React.DetailedHTMLProps<
+        React.HTMLAttributes<HTMLElement> & {
+          value?: string
+          min?: string
+          max?: string
+          disabled?: boolean | ''
+          locale?: string
+          'first-day-of-week'?: number | ''
+          placeholder?: string
+          name?: string
+        },
+        HTMLElement
+      >
     }
   }
 }

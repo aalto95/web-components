@@ -3,8 +3,9 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>UI Button Demo</title>
+  <title>UI Kit Demo</title>
   <script type="module" src="../dist/ui-button.js"></script>
+  <script type="module" src="../dist/ui-datepicker.js"></script>
   <style>
     body {
       font-family: system-ui, -apple-system, sans-serif;
@@ -98,6 +99,52 @@
     </div>
   </section>
 
+  <hr>
+
+  <h1><code>&lt;ui-datepicker&gt;</code> Demo</h1>
+
+  <section>
+    <h2>Basic</h2>
+    <ui-datepicker placeholder="Pick a date"></ui-datepicker>
+  </section>
+
+  <section>
+    <h2>With Value</h2>
+    <ui-datepicker value="2026-05-15"></ui-datepicker>
+  </section>
+
+  <section>
+    <h2>With Min / Max</h2>
+    <ui-datepicker min="2026-05-01" max="2026-05-31" value="2026-05-15"></ui-datepicker>
+    <p style="margin-top: 0.5rem; font-size: 0.875rem; color: #6b7280;">Only dates in May 2026 are selectable.</p>
+  </section>
+
+  <section>
+    <h2>Disabled</h2>
+    <ui-datepicker disabled value="2026-05-15"></ui-datepicker>
+  </section>
+
+  <section>
+    <h2>Monday Start</h2>
+    <ui-datepicker first-day-of-week="1" value="2026-05-15"></ui-datepicker>
+  </section>
+
+  <section>
+    <h2>French Locale</h2>
+    <ui-datepicker locale="fr-FR" value="2026-05-15"></ui-datepicker>
+  </section>
+
+  <section>
+    <h2>Interactive Demo</h2>
+    <div class="row">
+      <ui-datepicker id="demo-datepicker" value="2026-05-15"></ui-datepicker>
+      <ui-button id="toggle-dp-disabled" variant="outline">Toggle Disabled</ui-button>
+    </div>
+    <div class="row" style="margin-top: 0.75rem;">
+      <code>value: <span id="dp-value">2026-05-15</span></code>
+    </div>
+  </section>
+
   <script>
     const target = document.getElementById('target-btn')
 
@@ -107,6 +154,16 @@
 
     document.getElementById('toggle-disabled').addEventListener('click', () => {
       target.disabled = !target.disabled
+    })
+
+    const dp = document.getElementById('demo-datepicker')
+    const dpValue = document.getElementById('dp-value')
+    dp.addEventListener('change', (e) => {
+      dpValue.textContent = e.detail.value || '(empty)'
+    })
+
+    document.getElementById('toggle-dp-disabled').addEventListener('click', () => {
+      dp.disabled = !dp.disabled
     })
   </script>
 </body>
