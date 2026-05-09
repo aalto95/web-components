@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>UI Button Demo</title>
+  <script type="module" src="../dist/ui-button.js"></script>
+  <style>
+    body {
+      font-family: system-ui, -apple-system, sans-serif;
+      max-width: 800px;
+      margin: 2rem auto;
+      padding: 0 1rem;
+      background: #f9fafb;
+      color: #111827;
+    }
+    section { margin-bottom: 2rem; }
+    h2 { margin-bottom: 0.75rem; font-size: 1.125rem; color: #374151; }
+    .row { display: flex; gap: 0.75rem; flex-wrap: wrap; align-items: center; }
+    hr { border: none; border-top: 1px solid #e5e7eb; margin: 1.5rem 0; }
+    code { background: #e5e7eb; padding: 0.125em 0.375em; border-radius: 4px; font-size: 0.875em; }
+  </style>
+</head>
+<body>
+  <h1><code>&lt;ui-button&gt;</code> Demo</h1>
+
+  <section>
+    <h2>Variants</h2>
+    <div class="row">
+      <ui-button variant="primary">Primary</ui-button>
+      <ui-button variant="secondary">Secondary</ui-button>
+      <ui-button variant="outline">Outline</ui-button>
+      <ui-button variant="ghost">Ghost</ui-button>
+    </div>
+  </section>
+
+  <section>
+    <h2>Sizes</h2>
+    <div class="row">
+      <ui-button size="small">Small</ui-button>
+      <ui-button size="medium">Medium</ui-button>
+      <ui-button size="large">Large</ui-button>
+    </div>
+  </section>
+
+  <section>
+    <h2>Disabled</h2>
+    <div class="row">
+      <ui-button disabled>Primary</ui-button>
+      <ui-button variant="secondary" disabled>Secondary</ui-button>
+      <ui-button variant="outline" disabled>Outline</ui-button>
+      <ui-button variant="ghost" disabled>Ghost</ui-button>
+    </div>
+  </section>
+
+  <section>
+    <h2>Loading</h2>
+    <div class="row">
+      <ui-button loading>Primary</ui-button>
+      <ui-button variant="secondary" loading>Secondary</ui-button>
+      <ui-button variant="outline" loading>Outline</ui-button>
+      <ui-button variant="ghost" loading>Ghost</ui-button>
+    </div>
+  </section>
+
+  <section>
+    <h2>Full Width</h2>
+    <ui-button full-width>Full Width Button</ui-button>
+  </section>
+
+  <section>
+    <h2>Icons</h2>
+    <div class="row">
+      <ui-button>
+        <span slot="icon-leading">👍</span>
+        With Leading Icon
+      </ui-button>
+      <ui-button>
+        Click Me
+        <span slot="icon-trailing">→</span>
+      </ui-button>
+      <ui-button>
+        <span slot="icon-leading">⭐</span>
+        Both Sides
+        <span slot="icon-trailing">✨</span>
+      </ui-button>
+    </div>
+  </section>
+
+  <section>
+    <h2>Interactive Demo</h2>
+    <div class="row">
+      <ui-button id="toggle-loading">Toggle Loading</ui-button>
+      <ui-button id="toggle-disabled" variant="outline">Toggle Disabled</ui-button>
+      <ui-button id="target-btn" variant="secondary" style="transition: none;">
+        Target Button
+      </ui-button>
+    </div>
+  </section>
+
+  <script>
+    const target = document.getElementById('target-btn')
+
+    document.getElementById('toggle-loading').addEventListener('click', () => {
+      target.loading = !target.loading
+    })
+
+    document.getElementById('toggle-disabled').addEventListener('click', () => {
+      target.disabled = !target.disabled
+    })
+  </script>
+</body>
+</html>

@@ -1,0 +1,16 @@
+{
+  "name": "web-components-monorepo",
+  "private": true,
+  "scripts": {
+    "build": "pnpm --filter @web-components/ui-kit build",
+    "build:react": "pnpm build && pnpm --filter consumer-react build",
+    "build:angular": "pnpm build && pnpm --filter consumer-angular build",
+    "dev:ui-kit": "pnpm --filter @web-components/ui-kit build && web-dev-server --node-resolve --open packages/ui-kit/demo/ --watch --root-dir .",
+    "dev:react": "pnpm build && pnpm --filter consumer-react dev",
+    "dev:angular": "pnpm build && pnpm --filter consumer-angular start",
+    "typecheck:react": "pnpm --filter consumer-react typecheck"
+  },
+  "devDependencies": {
+    "@web/dev-server": "^0.4.6"
+  }
+}

@@ -1,0 +1,10 @@
+node_modules
+dist
+*.local
+.env
+*.log
+
+/.angular
+
+.DS_Store
+Thumbs.db

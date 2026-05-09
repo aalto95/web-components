@@ -1,0 +1,61 @@
+<div class="app">
+  <h1>Angular + <code>&lt;ui-button&gt;</code></h1>
+
+  <section>
+    <h2>Variants</h2>
+    <div class="row">
+      <ui-button variant="primary">Primary</ui-button>
+      <ui-button variant="secondary">Secondary</ui-button>
+      <ui-button variant="outline">Outline</ui-button>
+      <ui-button variant="ghost">Ghost</ui-button>
+    </div>
+  </section>
+
+  <section>
+    <h2>Sizes</h2>
+    <div class="row">
+      <ui-button size="small">Small</ui-button>
+      <ui-button size="medium">Medium</ui-button>
+      <ui-button size="large">Large</ui-button>
+    </div>
+  </section>
+
+  <section>
+    <h2>With Angular state</h2>
+    <div class="row">
+      <ui-button
+        variant="primary"
+        [attr.loading]="loading ? '' : null"
+        [attr.disabled]="disabled ? '' : null"
+        (click)="handleClick()"
+      >
+        {{ loading ? 'Loading...' : 'Click me' }}
+      </ui-button>
+      <ui-button variant="outline" (click)="toggleLoading()">
+        Toggle Loading
+      </ui-button>
+      <ui-button variant="ghost" (click)="toggleDisabled()">
+        Toggle Disabled
+      </ui-button>
+    </div>
+  </section>
+
+  <section>
+    <h2>Full width</h2>
+    <ui-button full-width variant="secondary">Full Width Button</ui-button>
+  </section>
+
+  <section>
+    <h2>With icons</h2>
+    <div class="row">
+      <ui-button>
+        <span slot="icon-leading">→</span>
+        Leading Icon
+      </ui-button>
+      <ui-button>
+        Trailing Icon
+        <span slot="icon-trailing">→</span>
+      </ui-button>
+    </div>
+  </section>
+</div>
