@@ -27,6 +27,24 @@ declare module 'react' {
         },
         HTMLElement
       >
+
+      'ui-input': React.DetailedHTMLProps<
+        React.HTMLAttributes<HTMLElement> & {
+          value?: string
+          placeholder?: string
+          disabled?: boolean | ''
+          readonly?: boolean | ''
+          type?: 'text' | 'password' | 'email' | 'number' | 'tel' | 'url' | 'search'
+          name?: string
+          size?: 'small' | 'medium' | 'large'
+          label?: string
+          'helper-text'?: string
+          error?: string
+          required?: boolean | ''
+          autocomplete?: string
+        },
+        HTMLElement
+      >
     }
   }
 }

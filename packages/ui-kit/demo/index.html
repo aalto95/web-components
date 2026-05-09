@@ -6,6 +6,7 @@
   <title>UI Kit Demo</title>
   <script type="module" src="../dist/ui-button.js"></script>
   <script type="module" src="../dist/ui-datepicker.js"></script>
+  <script type="module" src="../dist/ui-input.js"></script>
   <style>
     body {
       font-family: system-ui, -apple-system, sans-serif;
@@ -145,6 +146,76 @@
     </div>
   </section>
 
+  <hr>
+
+  <h1><code>&lt;ui-input&gt;</code> Demo</h1>
+
+  <section>
+    <h2>Basic</h2>
+    <ui-input placeholder="Enter text..."></ui-input>
+  </section>
+
+  <section>
+    <h2>With Label</h2>
+    <div class="row" style="flex-direction: column; align-items: flex-start;">
+      <ui-input label="Full Name" placeholder="John Doe"></ui-input>
+      <ui-input label="Email" type="email" placeholder="john@example.com"></ui-input>
+    </div>
+  </section>
+
+  <section>
+    <h2>Sizes</h2>
+    <div class="row">
+      <ui-input size="small" placeholder="Small" label="Small"></ui-input>
+      <ui-input size="medium" placeholder="Medium" label="Medium"></ui-input>
+      <ui-input size="large" placeholder="Large" label="Large"></ui-input>
+    </div>
+  </section>
+
+  <section>
+    <h2>Error & Helper Text</h2>
+    <div class="row" style="flex-direction: column; align-items: flex-start;">
+      <ui-input label="Username" helper-text="Choose a unique username" placeholder="yourname"></ui-input>
+      <ui-input label="Email" error="Invalid email address" value="not-an-email" type="email"></ui-input>
+    </div>
+  </section>
+
+  <section>
+    <h2>Required</h2>
+    <ui-input label="Password" type="password" required placeholder="Enter password"></ui-input>
+  </section>
+
+  <section>
+    <h2>Disabled & Readonly</h2>
+    <div class="row" style="flex-direction: column; align-items: flex-start;">
+      <ui-input label="Disabled" disabled value="Can't touch this"></ui-input>
+      <ui-input label="Readonly" readonly value="Fixed value"></ui-input>
+    </div>
+  </section>
+
+  <section>
+    <h2>Icons via Slots</h2>
+    <div class="row">
+      <ui-input placeholder="Search...">
+        <span slot="leading">🔍</span>
+      </ui-input>
+      <ui-input placeholder="With trailing" value="Clear me">
+        <span slot="trailing" style="cursor:pointer;">✕</span>
+      </ui-input>
+    </div>
+  </section>
+
+  <section>
+    <h2>Interactive Demo</h2>
+    <div class="row">
+      <ui-input id="demo-input" label="Live Value" placeholder="Type something..."></ui-input>
+      <ui-button id="clear-input" variant="outline">Clear</ui-button>
+    </div>
+    <div class="row" style="margin-top: 0.75rem;">
+      <code>value: "<span id="input-value"></span>"</code>
+    </div>
+  </section>
+
   <script>
     const target = document.getElementById('target-btn')
 
@@ -164,6 +235,17 @@
 
     document.getElementById('toggle-dp-disabled').addEventListener('click', () => {
       dp.disabled = !dp.disabled
+    })
+
+    const demoInput = document.getElementById('demo-input')
+    const inputValue = document.getElementById('input-value')
+    demoInput.addEventListener('input', () => {
+      inputValue.textContent = demoInput.value
+    })
+
+    document.getElementById('clear-input').addEventListener('click', () => {
+      demoInput.value = ''
+      inputValue.textContent = ''
     })
   </script>
 </body>
