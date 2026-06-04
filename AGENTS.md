@@ -23,9 +23,15 @@
 | `pnpm build` | Build ui-kit (tsc) |
 | `pnpm build:react` | Build ui-kit + consumer-react |
 | `pnpm build:angular` | Build ui-kit + consumer-angular |
+| `pnpm check` | Run Biome lint + format check |
+| `pnpm check:fix` | Auto-fix all safe Biome issues |
 | `pnpm dev:ui-kit` | Demo server for ui-kit components |
 | `pnpm dev:react` | Vite dev server for React app |
 | `pnpm dev:angular` | `ng serve` for Angular app |
+| `pnpm format` | Check formatting with Biome |
+| `pnpm format:fix` | Auto-format with Biome |
+| `pnpm lint` | Run Biome linter |
+| `pnpm lint:fix` | Auto-fix lint issues with Biome |
 | `pnpm typecheck:react` | TypeScript type check for React |
 
 ## Conventions

@@ -1,8 +1,8 @@
 <div class="app">
-  <h1>Angular + <code>&lt;ui-button&gt;</code></h1>
+  <h1>Angular + Web Components</h1>
 
   <section>
-    <h2>Variants</h2>
+    <h2><code>&lt;ui-button&gt;</code> — Variants</h2>
     <div class="row">
       <ui-button variant="primary">Primary</ui-button>
       <ui-button variant="secondary">Secondary</ui-button>
@@ -12,16 +12,7 @@
   </section>
 
   <section>
-    <h2>Sizes</h2>
-    <div class="row">
-      <ui-button size="small">Small</ui-button>
-      <ui-button size="medium">Medium</ui-button>
-      <ui-button size="large">Large</ui-button>
-    </div>
-  </section>
-
-  <section>
-    <h2>With Angular state</h2>
+    <h2><code>&lt;ui-button&gt;</code> — With Angular state</h2>
     <div class="row">
       <ui-button
         variant="primary"
@@ -41,21 +32,88 @@
   </section>
 
   <section>
-    <h2>Full width</h2>
-    <ui-button full-width variant="secondary">Full Width Button</ui-button>
+    <h2><code>&lt;ui-badge&gt;</code> — Variants</h2>
+    <div class="row">
+      <ui-badge *ngFor="let v of badgeVariants" [attr.variant]="v">{{ v }}</ui-badge>
+    </div>
   </section>
 
   <section>
-    <h2>With icons</h2>
+    <h2><code>&lt;ui-badge&gt;</code> — Removable</h2>
     <div class="row">
-      <ui-button>
-        <span slot="icon-leading">→</span>
-        Leading Icon
-      </ui-button>
-      <ui-button>
-        Trailing Icon
-        <span slot="icon-trailing">→</span>
-      </ui-button>
+      <ui-badge variant="primary" removable (remove)="removeBadge($event)">Filter: Active</ui-badge>
+      <ui-badge variant="success" removable (remove)="removeBadge($event)">Approved</ui-badge>
+      <ui-badge variant="warning" removable (remove)="removeBadge($event)">Pending</ui-badge>
     </div>
   </section>
+
+  <section>
+    <h2><code>&lt;ui-card&gt;</code> — Variants</h2>
+    <div style="display:flex;flex-direction:column;gap:1rem;">
+      <ui-card variant="outlined">
+        <div slot="header"><strong>Outlined</strong></div>
+        A card with a border outline.
+      </ui-card>
+      <ui-card variant="elevated">
+        <div slot="header"><strong>Elevated</strong></div>
+        A card with a subtle shadow.
+      </ui-card>
+    </div>
+  </section>
+
+  <section>
+    <h2><code>&lt;ui-checkbox&gt;</code></h2>
+    <div class="row">
+      <ui-checkbox
+        label="Accept terms"
+        (change)="onCheckboxChange($event)"
+      ></ui-checkbox>
+      <span>Checked: <code>{{ checkboxChecked }}</code></span>
+    </div>
+  </section>
+
+  <section>
+    <h2><code>&lt;ui-toggle&gt;</code></h2>
+    <div class="row">
+      <ui-toggle
+        label="Dark mode"
+        [attr.on-label]="'On'"
+        [attr.off-label]="'Off'"
+        (change)="onToggleChange($event)"
+      ></ui-toggle>
+      <span>Checked: <code>{{ toggleChecked }}</code></span>
+    </div>
+  </section>
+
+  <section>
+    <h2><code>&lt;ui-select&gt;</code></h2>
+    <div class="row">
+      <ui-select
+        #colorSelect
+        label="Favorite Color"
+        placeholder="Choose a color"
+        (change)="onColorChange($event)"
+      ></ui-select>
+      <span *ngIf="selectedColor">Selected: <code>{{ selectedColor }}</code></span>
+    </div>
+  </section>
+
+  <section>
+    <h2><code>&lt;ui-dialog&gt;</code></h2>
+    <div class="row">
+      <ui-button variant="primary" (click)="openDialog()">Open Dialog</ui-button>
+      <ui-button variant="outline" (click)="dialogSize='small'; openDialog()">Small Dialog</ui-button>
+    </div>
+  </section>
+
+  <ui-dialog
+    [attr.open]="dialogOpen ? '' : null"
+    heading="Hello from Angular"
+    [attr.size]="dialogSize"
+  >
+    <p>This dialog is opened from an Angular app using the <code>&lt;ui-dialog&gt;</code> component.</p>
+    <div slot="footer">
+      <ui-button variant="ghost" (click)="closeDialog()">Close</ui-button>
+    </div>
+  </ui-dialog>
 </div>

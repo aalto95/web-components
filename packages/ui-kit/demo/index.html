@@ -4,9 +4,15 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>UI Kit Demo</title>
+  <script type="module" src="../dist/ui-badge.js"></script>
   <script type="module" src="../dist/ui-button.js"></script>
+  <script type="module" src="../dist/ui-card.js"></script>
+  <script type="module" src="../dist/ui-checkbox.js"></script>
   <script type="module" src="../dist/ui-datepicker.js"></script>
+  <script type="module" src="../dist/ui-dialog.js"></script>
   <script type="module" src="../dist/ui-input.js"></script>
+  <script type="module" src="../dist/ui-select.js"></script>
+  <script type="module" src="../dist/ui-toggle.js"></script>
   <style>
     body {
       font-family: system-ui, -apple-system, sans-serif;
@@ -216,6 +222,253 @@
     </div>
   </section>
 
+  <hr>
+
+  <h1><code>&lt;ui-select&gt;</code> Demo</h1>
+
+  <section>
+    <h2>Basic</h2>
+    <ui-select id="demo-select-basic" placeholder="Choose a fruit"></ui-select>
+  </section>
+
+  <section>
+    <h2>With Label & Error</h2>
+    <div class="row" style="flex-direction: column; align-items: flex-start;">
+      <ui-select id="demo-select-labeled" label="Country" placeholder="Select your country"></ui-select>
+      <ui-select id="demo-select-error" label="City" error="Please select a city"></ui-select>
+    </div>
+  </section>
+
+  <section>
+    <h2>Disabled & Required</h2>
+    <div class="row">
+      <ui-select id="demo-select-disabled" disabled placeholder="Disabled"></ui-select>
+      <ui-select id="demo-select-required" required label="Required Field" placeholder="Pick one"></ui-select>
+    </div>
+  </section>
+
+  <section>
+    <h2>Sizes</h2>
+    <div class="row">
+      <ui-select id="demo-select-small" size="small" placeholder="Small"></ui-select>
+      <ui-select id="demo-select-medium" size="medium" placeholder="Medium"></ui-select>
+      <ui-select id="demo-select-large" size="large" placeholder="Large"></ui-select>
+    </div>
+  </section>
+
+  <section>
+    <h2>Interactive Demo</h2>
+    <div class="row">
+      <ui-select id="demo-select-interactive" label="Pick a color" placeholder="Choose..."></ui-select>
+      <ui-button id="toggle-select-disabled" variant="outline">Toggle Disabled</ui-button>
+    </div>
+    <div class="row" style="margin-top: 0.75rem;">
+      <code>value: <span id="select-value"></span></code>
+    </div>
+  </section>
+
+  <hr>
+
+  <h1><code>&lt;ui-checkbox&gt;</code> Demo</h1>
+
+  <section>
+    <h2>Basic</h2>
+    <ui-checkbox label="Accept terms and conditions"></ui-checkbox>
+  </section>
+
+  <section>
+    <h2>Checked</h2>
+    <ui-checkbox checked label="I agree to the privacy policy"></ui-checkbox>
+  </section>
+
+  <section>
+    <h2>Indeterminate</h2>
+    <ui-checkbox indeterminate label="Select all items"></ui-checkbox>
+  </section>
+
+  <section>
+    <h2>With Error</h2>
+    <ui-checkbox error="You must accept the terms" label="Required agreement"></ui-checkbox>
+  </section>
+
+  <section>
+    <h2>Disabled</h2>
+    <div class="row">
+      <ui-checkbox disabled label="Disabled unchecked"></ui-checkbox>
+      <ui-checkbox disabled checked label="Disabled checked"></ui-checkbox>
+    </div>
+  </section>
+
+  <section>
+    <h2>Interactive Demo</h2>
+    <div class="row">
+      <ui-checkbox id="demo-checkbox" label="Subscribe to newsletter"></ui-checkbox>
+      <ui-button id="toggle-checkbox" variant="outline">Toggle</ui-button>
+      <ui-button id="set-indeterminate" variant="ghost">Indeterminate</ui-button>
+    </div>
+    <div class="row" style="margin-top: 0.75rem;">
+      <code>checked: <span id="checkbox-value">false</span></code>
+    </div>
+  </section>
+
+  <hr>
+
+  <h1><code>&lt;ui-toggle&gt;</code> Demo</h1>
+
+  <section>
+    <h2>Basic</h2>
+    <ui-toggle label="Dark mode"></ui-toggle>
+  </section>
+
+  <section>
+    <h2>Checked</h2>
+    <ui-toggle checked label="Notifications"></ui-toggle>
+  </section>
+
+  <section>
+    <h2>With State Labels</h2>
+    <ui-toggle checked on-label="On" off-label="Off" label="Wi-Fi"></ui-toggle>
+  </section>
+
+  <section>
+    <h2>Disabled</h2>
+    <div class="row">
+      <ui-toggle disabled label="Disabled off"></ui-toggle>
+      <ui-toggle disabled checked label="Disabled on"></ui-toggle>
+    </div>
+  </section>
+
+  <section>
+    <h2>Interactive Demo</h2>
+    <div class="row">
+      <ui-toggle id="demo-toggle" label="Enable notifications" on-label="On" off-label="Off"></ui-toggle>
+    </div>
+    <div class="row" style="margin-top: 0.75rem;">
+      <code>checked: <span id="toggle-value">false</span></code>
+    </div>
+  </section>
+
+  <hr>
+
+  <h1><code>&lt;ui-badge&gt;</code> Demo</h1>
+
+  <section>
+    <h2>Variants</h2>
+    <div class="row">
+      <ui-badge variant="default">Default</ui-badge>
+      <ui-badge variant="primary">Primary</ui-badge>
+      <ui-badge variant="success">Success</ui-badge>
+      <ui-badge variant="warning">Warning</ui-badge>
+      <ui-badge variant="danger">Danger</ui-badge>
+    </div>
+  </section>
+
+  <section>
+    <h2>Sizes</h2>
+    <div class="row">
+      <ui-badge size="small" variant="primary">Small</ui-badge>
+      <ui-badge size="medium" variant="primary">Medium</ui-badge>
+      <ui-badge size="large" variant="primary">Large</ui-badge>
+    </div>
+  </section>
+
+  <section>
+    <h2>Removable</h2>
+    <div class="row">
+      <ui-badge variant="primary" removable>Filter: Active</ui-badge>
+      <ui-badge variant="success" removable>Status: Approved</ui-badge>
+      <ui-badge variant="warning" removable>Pending Review</ui-badge>
+      <ui-badge variant="danger" removable>Blocked</ui-badge>
+    </div>
+  </section>
+
+  <section>
+    <h2>Slotted Content</h2>
+    <div class="row">
+      <ui-badge variant="primary">
+        <span style="display:flex;align-items:center;gap:0.25em;">★ Premium</span>
+      </ui-badge>
+      <ui-badge variant="success">✓ Verified</ui-badge>
+    </div>
+  </section>
+
+  <hr>
+
+  <h1><code>&lt;ui-card&gt;</code> Demo</h1>
+
+  <section>
+    <h2>Variants</h2>
+    <div style="display:flex;flex-direction:column;gap:1rem;">
+      <ui-card variant="outlined">
+        <div slot="header"><strong>Outlined Card</strong></div>
+        <p>This card has a border outline. It's the default variant.</p>
+        <div slot="footer" style="display:flex;gap:0.5rem;justify-content:flex-end;">
+          <ui-button size="small" variant="ghost">Cancel</ui-button>
+          <ui-button size="small">Save</ui-button>
+        </div>
+      </ui-card>
+      <ui-card variant="elevated">
+        <div slot="header"><strong>Elevated Card</strong></div>
+        <p>This card has a subtle box shadow for elevation.</p>
+        <div slot="footer" style="display:flex;gap:0.5rem;justify-content:flex-end;">
+          <ui-button size="small" variant="ghost">Cancel</ui-button>
+          <ui-button size="small" variant="primary">Save</ui-button>
+        </div>
+      </ui-card>
+      <ui-card variant="flat">
+        <div slot="header"><strong>Flat Card</strong></div>
+        <p>This card has a flat background with no border or shadow.</p>
+      </ui-card>
+    </div>
+  </section>
+
+  <hr>
+
+  <h1><code>&lt;ui-dialog&gt;</code> Demo</h1>
+
+  <section>
+    <h2>Open Dialog</h2>
+    <div class="row">
+      <ui-button id="open-dialog-btn">Open Dialog</ui-button>
+    </div>
+  </section>
+
+  <section>
+    <h2>Small Dialog</h2>
+    <div class="row">
+      <ui-button id="open-small-dialog-btn" variant="outline">Open Small Dialog</ui-button>
+    </div>
+  </section>
+
+  <section>
+    <h2>Without Close Button</h2>
+    <div class="row">
+      <ui-button id="open-no-close-btn" variant="ghost">Dialog without Close</ui-button>
+    </div>
+  </section>
+
+  <ui-dialog id="demo-dialog" heading="Confirm Action" size="medium">
+    <p>Are you sure you want to proceed with this action? This cannot be undone.</p>
+    <div slot="footer">
+      <ui-button id="dialog-cancel-btn" variant="ghost">Cancel</ui-button>
+      <ui-button id="dialog-confirm-btn" variant="primary">Confirm</ui-button>
+    </div>
+  </ui-dialog>
+
+  <ui-dialog id="demo-small-dialog" heading="Quick Info" size="small">
+    <p>This is a small dialog. Great for simple confirmations or alerts.</p>
+    <div slot="footer">
+      <ui-button id="small-dialog-ok-btn" variant="primary">OK</ui-button>
+    </div>
+  </ui-dialog>
+
+  <ui-dialog id="demo-no-close-dialog" heading="No Close Button" closable="false">
+    <p>This dialog doesn't have a close button. You can only dismiss it programmatically.</p>
+    <div slot="footer">
+      <ui-button id="no-close-ok-btn" variant="primary">Got it</ui-button>
+    </div>
+  </ui-dialog>
+
   <script>
     const target = document.getElementById('target-btn')
 
@@ -246,6 +499,108 @@
     document.getElementById('clear-input').addEventListener('click', () => {
       demoInput.value = ''
       inputValue.textContent = ''
+    })
+
+    // ui-select demos
+    const fruitOptions = [
+      { value: 'apple', label: 'Apple' },
+      { value: 'banana', label: 'Banana' },
+      { value: 'orange', label: 'Orange' },
+      { value: 'grape', label: 'Grape' },
+    ]
+    const countryOptions = [
+      { value: 'us', label: 'United States' },
+      { value: 'ca', label: 'Canada' },
+      { value: 'mx', label: 'Mexico' },
+      { value: 'uk', label: 'United Kingdom' },
+      { value: 'de', label: 'Germany' },
+    ]
+    const cityOptions = [
+      { value: 'nyc', label: 'New York' },
+      { value: 'la', label: 'Los Angeles' },
+      { value: 'chi', label: 'Chicago' },
+    ]
+    const colorOptions = [
+      { value: 'red', label: 'Red' },
+      { value: 'green', label: 'Green' },
+      { value: 'blue', label: 'Blue' },
+    ]
+
+    document.getElementById('demo-select-basic').options = fruitOptions
+    document.getElementById('demo-select-labeled').options = countryOptions
+    document.getElementById('demo-select-error').options = cityOptions
+    document.getElementById('demo-select-disabled').options = [{ value: 'a', label: 'Option A' }]
+    document.getElementById('demo-select-required').options = [
+      { value: 'x', label: 'Option X' },
+      { value: 'y', label: 'Option Y' },
+    ]
+    document.getElementById('demo-select-small').options = [{ value: '1', label: 'Small Option' }]
+    document.getElementById('demo-select-medium').options = [{ value: '1', label: 'Medium Option' }]
+    document.getElementById('demo-select-large').options = [{ value: '1', label: 'Large Option' }]
+
+    const interactiveSelect = document.getElementById('demo-select-interactive')
+    interactiveSelect.options = colorOptions
+
+    const selectValue = document.getElementById('select-value')
+    interactiveSelect.addEventListener('change', (e) => {
+      selectValue.textContent = e.detail.value
+    })
+
+    document.getElementById('toggle-select-disabled').addEventListener('click', () => {
+      interactiveSelect.disabled = !interactiveSelect.disabled
+    })
+
+    // ui-checkbox interactive
+    const demoCheckbox = document.getElementById('demo-checkbox')
+    const checkboxValue = document.getElementById('checkbox-value')
+    demoCheckbox.addEventListener('change', (e) => {
+      checkboxValue.textContent = e.detail.checked
+    })
+
+    document.getElementById('toggle-checkbox').addEventListener('click', () => {
+      demoCheckbox.checked = !demoCheckbox.checked
+      checkboxValue.textContent = demoCheckbox.checked
+    })
+
+    document.getElementById('set-indeterminate').addEventListener('click', () => {
+      demoCheckbox.indeterminate = true
+      checkboxValue.textContent = 'indeterminate'
+    })
+
+    // ui-toggle interactive
+    const demoToggle = document.getElementById('demo-toggle')
+    const toggleValue = document.getElementById('toggle-value')
+    demoToggle.addEventListener('change', (e) => {
+      toggleValue.textContent = e.detail.checked
+    })
+
+    // ui-dialog interactions
+    document.getElementById('open-dialog-btn').addEventListener('click', () => {
+      document.getElementById('demo-dialog').open = true
+    })
+
+    document.getElementById('dialog-cancel-btn').addEventListener('click', () => {
+      document.getElementById('demo-dialog').open = false
+    })
+
+    document.getElementById('dialog-confirm-btn').addEventListener('click', () => {
+      document.getElementById('demo-dialog').open = false
+    })
+
+    document.getElementById('open-small-dialog-btn').addEventListener('click', () => {
+      document.getElementById('demo-small-dialog').open = true
+    })
+
+    document.getElementById('small-dialog-ok-btn').addEventListener('click', () => {
+      document.getElementById('demo-small-dialog').open = false
+    })
+
+    document.getElementById('open-no-close-btn').addEventListener('click', () => {
+      document.getElementById('demo-no-close-dialog').open = true
+    })
+
+    document.getElementById('no-close-ok-btn').addEventListener('click', () => {
+      document.getElementById('demo-no-close-dialog').open = false
     })
   </script>
 </body>

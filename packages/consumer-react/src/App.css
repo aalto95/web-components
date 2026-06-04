@@ -1,5 +1,5 @@
 .app {
-  max-width: 480px;
+  max-width: 540px;
   margin: 0 auto;
   padding: 2rem 1rem;
   font-family: system-ui, -apple-system, sans-serif;
@@ -23,7 +23,8 @@ h2 {
 }
 
 .form ui-input,
-.form ui-datepicker {
+.form ui-datepicker,
+.form ui-select {
   width: 100%;
 }
 

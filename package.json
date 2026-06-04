@@ -5,12 +5,19 @@
     "build": "pnpm --filter @web-components/ui-kit build",
     "build:react": "pnpm build && pnpm --filter consumer-react build",
     "build:angular": "pnpm build && pnpm --filter consumer-angular build",
+    "check": "pnpm biome check --error-on-warnings .",
+    "check:fix": "pnpm biome check --error-on-warnings --fix .",
     "dev:ui-kit": "pnpm --filter @web-components/ui-kit build && web-dev-server --node-resolve --open packages/ui-kit/demo/ --watch --root-dir .",
     "dev:react": "pnpm build && pnpm --filter consumer-react dev",
     "dev:angular": "pnpm build && pnpm --filter consumer-angular start",
+    "format": "pnpm biome format .",
+    "format:fix": "pnpm biome format --write .",
+    "lint": "pnpm biome lint --error-on-warnings .",
+    "lint:fix": "pnpm biome lint --error-on-warnings --fix .",
     "typecheck:react": "pnpm --filter consumer-react typecheck"
   },
   "devDependencies": {
+    "@biomejs/biome": "^2.4.16",
     "@web/dev-server": "^0.4.6"
   }
 }

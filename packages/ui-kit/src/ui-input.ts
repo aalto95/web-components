@@ -61,19 +61,23 @@ export class UiInput extends LitElement {
   }
 
   private _dispatchInput(): void {
-    this.dispatchEvent(new CustomEvent('input', {
-      detail: { value: this.value },
-      bubbles: true,
-      composed: true,
-    }))
+    this.dispatchEvent(
+      new CustomEvent('input', {
+        detail: { value: this.value },
+        bubbles: true,
+        composed: true,
+      }),
+    )
   }
 
   private _dispatchChange(): void {
-    this.dispatchEvent(new CustomEvent('change', {
-      detail: { value: this.value },
-      bubbles: true,
-      composed: true,
-    }))
+    this.dispatchEvent(
+      new CustomEvent('change', {
+        detail: { value: this.value },
+        bubbles: true,
+        composed: true,
+      }),
+    )
   }
 
   static styles = css`
@@ -204,11 +208,15 @@ export class UiInput extends LitElement {
 
     return html`
       <div class="input-wrapper">
-        ${this.label ? html`
+        ${
+          this.label
+            ? html`
           <label class=${classMap({ label: true, 'label--required': this.required })}>
             ${this.label}
           </label>
-        ` : ''}
+        `
+            : ''
+        }
         <div class=${classMap(containerClasses)}>
           <slot name="leading"></slot>
           <input
@@ -228,9 +236,13 @@ export class UiInput extends LitElement {
           >
           <slot name="trailing"></slot>
         </div>
-        ${this.error || this.helperText ? html`
+        ${
+          this.error || this.helperText
+            ? html`
           <span class="helper-text" id="helper">${this.error || this.helperText}</span>
-        ` : ''}
+        `
+            : ''
+        }
       </div>
     `
   }

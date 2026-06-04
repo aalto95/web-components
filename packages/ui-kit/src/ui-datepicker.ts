@@ -56,19 +56,19 @@ export class UiDatepicker extends LitElement {
   private get _selectedDate(): Date | null {
     if (!this.value) return null
     const d = new Date(`${this.value}T00:00:00`)
-    return isNaN(d.getTime()) ? null : d
+    return Number.isNaN(d.getTime()) ? null : d
   }
 
   private get _minDate(): Date | null {
     if (!this.min) return null
     const d = new Date(`${this.min}T00:00:00`)
-    return isNaN(d.getTime()) ? null : d
+    return Number.isNaN(d.getTime()) ? null : d
   }
 
   private get _maxDate(): Date | null {
     if (!this.max) return null
     const d = new Date(`${this.max}T00:00:00`)
-    return isNaN(d.getTime()) ? null : d
+    return Number.isNaN(d.getTime()) ? null : d
   }
 
   private get _displayValue(): string {
@@ -109,12 +109,20 @@ export class UiDatepicker extends LitElement {
     if (this.disabled) return true
     if (this._minDate) {
       const d = new Date(date.getFullYear(), date.getMonth(), date.getDate())
-      const min = new Date(this._minDate.getFullYear(), this._minDate.getMonth(), this._minDate.getDate())
+      const min = new Date(
+        this._minDate.getFullYear(),
+        this._minDate.getMonth(),
+        this._minDate.getDate(),
+      )
       if (d < min) return true
     }
     if (this._maxDate) {
       const d = new Date(date.getFullYear(), date.getMonth(), date.getDate())
-      const max = new Date(this._maxDate.getFullYear(), this._maxDate.getMonth(), this._maxDate.getDate())
+      const max = new Date(
+        this._maxDate.getFullYear(),
+        this._maxDate.getMonth(),
+        this._maxDate.getDate(),
+      )
       if (d > max) return true
     }
     return false
@@ -147,20 +155,41 @@ export class UiDatepicker extends LitElement {
       const day = daysInPrevMonth - i
       const date = new Date(prevYear, prevMonth, day)
       const ds = `${prevYear}-${String(prevMonth + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`
-      days.push({ day, date, isCurrentMonth: false, isToday: ds === todayStr, isSelected: ds === this.value, disabled: this._isDateDisabled(date) })
+      days.push({
+        day,
+        date,
+        isCurrentMonth: false,
+        isToday: ds === todayStr,
+        isSelected: ds === this.value,
+        disabled: this._isDateDisabled(date),
+      })
     }
 
     for (let i = 1; i <= daysInMonth; i++) {
       const date = new Date(this._viewYear, this._viewMonth, i)
       const ds = `${this._viewYear}-${String(this._viewMonth + 1).padStart(2, '0')}-${String(i).padStart(2, '0')}`
-      days.push({ day: i, date, isCurrentMonth: true, isToday: ds === todayStr, isSelected: ds === this.value, disabled: this._isDateDisabled(date) })
+      days.push({
+        day: i,
+        date,
+        isCurrentMonth: true,
+        isToday: ds === todayStr,
+        isSelected: ds === this.value,
+        disabled: this._isDateDisabled(date),
+      })
     }
 
     const remaining = 42 - days.length
     for (let i = 1; i <= remaining; i++) {
       const date = new Date(nextYear, nextMonth, i)
       const ds = `${nextYear}-${String(nextMonth + 1).padStart(2, '0')}-${String(i).padStart(2, '0')}`
-      days.push({ day: i, date, isCurrentMonth: false, isToday: ds === todayStr, isSelected: ds === this.value, disabled: this._isDateDisabled(date) })
+      days.push({
+        day: i,
+        date,
+        isCurrentMonth: false,
+        isToday: ds === todayStr,
+        isSelected: ds === this.value,
+        disabled: this._isDateDisabled(date),
+      })
     }
 
     return days
@@ -177,11 +206,13 @@ export class UiDatepicker extends LitElement {
   }
 
   private _dispatchChange(): void {
-    this.dispatchEvent(new CustomEvent('change', {
-      detail: { value: this.value },
-      bubbles: true,
-      composed: true,
-    }))
+    this.dispatchEvent(
+      new CustomEvent('change', {
+        detail: { value: this.value },
+        bubbles: true,
+        composed: true,
+      }),
+    )
   }
 
   private _onInputChange(e: Event): void {
@@ -193,7 +224,7 @@ export class UiDatepicker extends LitElement {
       return
     }
     const d = new Date(`${val}T00:00:00`)
-    if (!isNaN(d.getTime())) {
+    if (!Number.isNaN(d.getTime())) {
       const y = d.getFullYear()
       const m = String(d.getMonth() + 1).padStart(2, '0')
       const day = String(d.getDate()).padStart(2, '0')
@@ -511,9 +542,13 @@ export class UiDatepicker extends LitElement {
 
     return html`
       <div class="datepicker-field">
-        ${this.label ? html`
+        ${
+          this.label
+            ? html`
           <label class="label">${this.label}</label>
-        ` : ''}
+        `
+            : ''
+        }
         <div class="datepicker-wrapper">
           <div class="input-container">
             <input
@@ -541,7 +576,9 @@ export class UiDatepicker extends LitElement {
               </svg>
             </button>
           </div>
-          ${this._open ? html`
+          ${
+            this._open
+              ? html`
             <div class="calendar-popup" role="dialog" aria-label="Date picker">
               <div class="calendar-header">
                 <button
@@ -559,12 +596,15 @@ export class UiDatepicker extends LitElement {
                 >›</button>
               </div>
               <div class="day-names" role="row" aria-hidden="true">
-                ${dayNames.map(name => html`
+                ${dayNames.map(
+                  (name) => html`
                   <span class="day-name">${name}</span>
-                `)}
+                `,
+                )}
               </div>
               <div class="days-grid" role="grid" aria-label="Calendar days">
-                ${days.map(d => html`
+                ${days.map(
+                  (d) => html`
                   <button
                     class=${classMap({
                       day: true,
@@ -582,14 +622,21 @@ export class UiDatepicker extends LitElement {
                     aria-label=${d.date.toLocaleDateString(this.locale, { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}
                     tabindex=${d.isSelected ? '0' : '-1'}
                   >${d.day}</button>
-                `)}
+                `,
+                )}
               </div>
             </div>
-          ` : ''}
+          `
+              : ''
+          }
         </div>
-        ${this.error ? html`
+        ${
+          this.error
+            ? html`
           <span class="helper-text">${this.error}</span>
-        ` : ''}
+        `
+            : ''
+        }
       </div>
     `
   }
